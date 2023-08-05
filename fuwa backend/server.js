@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 dotenv.config();
 
-const app = express();
+const app = require("./app");
 
 const DB = process.env.DB_URL.replace("<password>", process.env.DB_PASSWORD);
 mongoose
@@ -15,5 +15,5 @@ mongoose
 const PORT = process.env.PORT || process.env.API_PORT;
 
 const server = app.listen(PORT, (req, res) => {
-  console.log(`Listening on port ${5002}`);
+  console.log(`Listening on port ${process.env.API_PORT}`);
 });
