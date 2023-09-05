@@ -1,4 +1,4 @@
-import { Button } from "@mui/material/Button";
+import { Button } from "@mui/material";
 
 const CustomPrimaryButton = ({
   label,
@@ -10,7 +10,7 @@ const CustomPrimaryButton = ({
     <Button
       variant="container"
       sx={{
-        bgColor: "#5865F2",
+        bgcolor: "#5865F2",
         color: "white",
         textTransform: "none",
         fontSize: "16px",
