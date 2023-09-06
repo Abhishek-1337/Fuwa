@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import LoginHeader from "./LoginHeader";
 import LoginInput from "./LoginInput";
 import LoginFooter from "./LoginFooter";
-import { validateInput } from "../../shared/utils/validator";
+import { validateLoginForm } from "../../shared/utils/validator";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ const Login = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    setIsFormValid(validateInput(email, password));
+    setIsFormValid(validateLoginForm(email, password));
   }, [email, password, setIsFormValid]);
 
   const handleLogin = () => {

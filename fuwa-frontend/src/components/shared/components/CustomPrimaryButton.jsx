@@ -1,11 +1,7 @@
 import { Button } from "@mui/material";
 
-const CustomPrimaryButton = ({
-  label,
-  additionalStyles,
-  disabled,
-  onClick,
-}) => {
+const CustomPrimaryButton = (props) => {
+  const { label, additionalStyles, disabled, onClick } = props;
   return (
     <Button
       variant="container"
