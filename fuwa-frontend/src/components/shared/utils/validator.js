@@ -18,9 +18,9 @@ const validateMail = (mail) => {
 };
 
 const validateName = (name) => {
-  return name.length > 5 && name.length < 12;
+  return name.length > 5 && name.length < 14;
 };
 
 const validatePassword = (password) => {
-  return password.length > 6 && password.length < 12;
+  return password.length > 6 && password.length < 14;
 };

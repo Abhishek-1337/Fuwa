@@ -5,11 +5,16 @@ import LoginHeader from "./LoginHeader";
 import LoginInput from "./LoginInput";
 import LoginFooter from "./LoginFooter";
 import { validateLoginForm } from "../../shared/utils/validator";
+import { setUserDetails } from "../../../store/slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsFormValid(validateLoginForm(email, password));
@@ -17,6 +22,15 @@ const Login = () => {
 
   const handleLogin = () => {
     console.log("Logging in");
+    dispatch(
+      setUserDetails(
+        {
+          email,
+          password,
+        },
+        navigate
+      )
+    );
   };
   return (
     <AuthBox>

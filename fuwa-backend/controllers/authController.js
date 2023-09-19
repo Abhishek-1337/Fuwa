@@ -15,9 +15,7 @@ const createJwtToken = (user, status, res) => {
   res.status(status).json({
     status: "success",
     token,
-    data: {
-      user,
-    },
+    user,
   });
 };
 
@@ -33,6 +31,7 @@ exports.signup = catchAsync(async (req, res) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email + " " + password);
   if (!email || !password) {
     return next(new AppError("Please provide email or password", 400));
   }
@@ -40,7 +39,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.checkPassword(password, user.password))) {
-    return new AppError("Please provide valid username or password", 400);
+    return next(new AppError("Please provide valid username or password", 400));
   }
 
   createJwtToken(user, 200, res);
