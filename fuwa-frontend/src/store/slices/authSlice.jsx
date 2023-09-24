@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login, register } from "../../api";
+import { alertActions } from "./alertSlice";
 
 const initialState = {
   userDetails: null,
@@ -34,8 +35,12 @@ export const setUserDetails = (userDetail, navigate, type) => {
     } else {
       response = await login(userDetail);
     }
+
+    // console.log(response.message.response.data.message);
     if (response.error) {
-      //
+      dispatch(
+        alertActions.openAlertMessage(response.message.response.data.message)
+      );
     } else {
       const userDetails = {
         email: response.data.user.email,

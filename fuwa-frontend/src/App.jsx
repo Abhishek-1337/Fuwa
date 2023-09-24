@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./components/auth/Login/Login";
 import Register from "./components/auth/Register/Register";
 import Dashboard from "./components/dashboard/Dashboard";
+import AlertNotification from "./components/shared/components/AlertNotification";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="dashboard" element={<Dashboard />} />
       </Routes>
+      <AlertNotification />
     </>
   );
 }
