@@ -27,10 +27,9 @@ const authSlice = createSlice({
 
 export const setUserDetails = (userDetail, navigate, type) => {
   return async (dispatch) => {
-    console.log(userDetail);
+    // console.log(userDetail);
     let response;
     if (type && type === "register") {
-      console.log(userDetail);
       response = await register(userDetail);
     } else {
       response = await login(userDetail);
