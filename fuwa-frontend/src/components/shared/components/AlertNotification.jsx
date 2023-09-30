@@ -6,6 +6,7 @@ const AlertNotification = () => {
   const dispatch = useDispatch();
   const alert = useSelector((state) => state.alert);
   return (
+    // Component is known as toast
     <Snackbar
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       open={alert.showAlertMessage}
