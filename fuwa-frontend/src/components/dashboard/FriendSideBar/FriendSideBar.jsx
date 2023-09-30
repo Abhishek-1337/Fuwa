@@ -1,4 +1,8 @@
 import { styled } from "@mui/material";
+import AddFriendButton from "./AddFriendButton";
+import FriendTitle from "./FriendTitle";
+import FriendList from "./FriendList/FriendList";
+import PendingInvitationsList from "./PendingInvitationsList/PendingInvitationsList";
 
 const MainContainer = styled("div")({
   height: "100%",
@@ -10,7 +14,15 @@ const MainContainer = styled("div")({
 });
 
 const FriendSideBar = () => {
-  return <MainContainer></MainContainer>;
+  return (
+    <MainContainer>
+      <AddFriendButton />
+      <FriendTitle title="Private Messages" />
+      <FriendList />
+      <FriendTitle title="Invitations" />
+      <PendingInvitationsList />
+    </MainContainer>
+  );
 };
 
 export default FriendSideBar;
