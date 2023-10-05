@@ -1,8 +1,8 @@
 import { Button, Typography } from "@mui/material";
 import Avatar from "../../../shared/components/Avatar";
+import OnlineIndicator from "./OnlineIndicator";
 
-const FriendsListItem = ({ username }) => {
-  console.log(username);
+const FriendsListItem = ({ username, isOnline }) => {
   return (
     <Button
       style={{
@@ -29,6 +29,7 @@ const FriendsListItem = ({ username }) => {
       >
         {username}
       </Typography>
+      {isOnline && <OnlineIndicator />}
     </Button>
   );
 };
