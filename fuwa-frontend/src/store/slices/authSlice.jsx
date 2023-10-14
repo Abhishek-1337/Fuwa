@@ -10,30 +10,22 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login(state, action) {
-      const item = action.payload;
+    setUserDetails(state, action) {
+      const userDetails = action.payload;
+      console.log(userDetails);
       return {
         ...state,
-        item,
-      };
-    },
-    register(state) {
-      return {
-        ...state,
+        userDetails,
       };
     },
   },
 });
 
-export const setUserDetails = (userDetail, navigate, type) => {
+export const signIn = (userDetail, navigate) => {
   return async (dispatch) => {
     // console.log(userDetail);
     let response;
-    if (type && type === "register") {
-      response = await register(userDetail);
-    } else {
-      response = await login(userDetail);
-    }
+    response = await login(userDetail);
 
     // console.log(response.message.response.data.message);
     if (response.error) {
@@ -47,7 +39,31 @@ export const setUserDetails = (userDetail, navigate, type) => {
         name: response.data.user.name,
       };
       localStorage.setItem("user", JSON.stringify(userDetails));
-      dispatch(authSlice.actions.login(userDetails));
+      dispatch(authSlice.actions.setUserDetails(userDetails));
+      navigate("/dashboard");
+    }
+  };
+};
+
+export const signUp = (userDetail, navigate) => {
+  return async (dispatch) => {
+    // console.log(userDetail);
+    let response;
+    response = await register(userDetail);
+
+    // console.log(response.message.response.data.message);
+    if (response.error) {
+      dispatch(
+        alertActions.openAlertMessage(response.message.response.data.message)
+      );
+    } else {
+      const userDetails = {
+        email: response.data.user.email,
+        token: response.data.token,
+        name: response.data.user.name,
+      };
+      localStorage.setItem("user", JSON.stringify(userDetails));
+      dispatch(authSlice.actions.setUserDetails(userDetails));
       navigate("/dashboard");
     }
   };

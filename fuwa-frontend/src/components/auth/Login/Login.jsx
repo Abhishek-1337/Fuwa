@@ -5,7 +5,7 @@ import LoginHeader from "./LoginHeader";
 import LoginInput from "./LoginInput";
 import LoginFooter from "./LoginFooter";
 import { validateLoginForm } from "../../shared/utils/validator";
-import { setUserDetails } from "../../../store/slices/authSlice";
+import { signIn } from "../../../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -23,7 +23,7 @@ const Login = () => {
   const handleLogin = () => {
     console.log("Logging in");
     dispatch(
-      setUserDetails(
+      signIn(
         {
           email,
           password,
