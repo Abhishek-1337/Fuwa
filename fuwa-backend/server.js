@@ -1,9 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const http = require("http");
+const socketServer = require("./socketServer");
 dotenv.config();
 
 const app = require("./app");
+const httpServer = http.createServer(app);
+socketServer.registerSocketServer(httpServer);
 
 const DB = process.env.DB_URL.replace("<password>", process.env.DB_PASSWORD);
 mongoose
