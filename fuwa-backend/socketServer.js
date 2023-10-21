@@ -5,8 +5,8 @@ const registerSocketServer = (server) => {
       methods: ["GET", "POST"],
     },
   });
-
-  io.on("connection", (socket) => {
+  //Same connect event but when client is connected to server.
+  io.on("connect", (socket) => {
     console.log("user connected");
     console.log(socket.id);
   });
