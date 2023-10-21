@@ -25,7 +25,7 @@ export const signIn = (userDetail, navigate) => {
     // console.log(response.message.response.data.message);
     if (response.error) {
       dispatch(
-        alertActions.openAlertMessage(response.message.response.data.message)
+        alertActions.openAlertMessage(response?.message?.response?.data.message)
       );
     } else {
       const userDetails = {
