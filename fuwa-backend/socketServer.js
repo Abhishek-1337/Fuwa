@@ -1,7 +1,6 @@
-const {
-  newConnectionHandler,
-} = require("./socket handlers/newConnectionHandler");
+const newConnectionHandler = require("./socket handlers/newConnectionHandler");
 const authSocket = require("./controllers/authSocket");
+const disconnectHandler = require("./socket handlers/disconnectHandler");
 
 const registerSocketServer = (server) => {
   const io = require("socket.io")(server, {
@@ -17,10 +16,15 @@ const registerSocketServer = (server) => {
   });
 
   //Same connect event but when client is connected to server.
+  //We have only one instance of io and many instances of socket according to the number of devices connected
   io.on("connection", (socket) => {
     console.log("user connected");
     console.log(socket.id);
     newConnectionHandler(socket, io);
+
+    socket.on("disconnect", () => {
+      disconnectHandler(socket);
+    });
   });
 };
 

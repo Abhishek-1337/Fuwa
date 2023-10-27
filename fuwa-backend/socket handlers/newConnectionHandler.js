@@ -1,7 +1,9 @@
-const setConnectedUser = require("../serverStore");
+const serverStore = require("../serverStore");
 
-exports.newConnectionHandler = async (socket, io) => {
+const newConnectionHandler = async (socket, io) => {
   const userDetails = socket.user;
   console.log(userDetails);
-  setConnectedUser({ socketId: socket.id, userId: userDetails.id });
+  serverStore.setConnectedUser({ socketId: socket.id, userId: userDetails.id });
 };
+
+module.exports = newConnectionHandler;
