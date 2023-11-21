@@ -10,7 +10,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setDetails(state, action) {
+    setUserDetails(state, action) {
       state.userDetails = action.payload;
     },
   },
@@ -34,7 +34,7 @@ export const signIn = (userDetail, navigate) => {
         name: response.data.user.name,
       };
       localStorage.setItem("user", JSON.stringify(userDetails));
-      dispatch(authSlice.actions.setDetails(userDetails));
+      dispatch(authSlice.actions.setUserDetails(userDetails));
       navigate("/dashboard");
     }
   };
@@ -58,15 +58,9 @@ export const signUp = (userDetail, navigate) => {
         name: response.data.user.name,
       };
       localStorage.setItem("user", JSON.stringify(userDetails));
-      dispatch(authSlice.actions.setDetails(userDetails));
+      dispatch(authSlice.actions.setUserDetails(userDetails));
       navigate("/dashboard");
     }
-  };
-};
-
-export const setUserDetails = (userDetails) => {
-  return (dispatch) => {
-    dispatch(authSlice.actions.setDetails(userDetails));
   };
 };
 

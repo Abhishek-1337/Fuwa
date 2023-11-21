@@ -6,7 +6,8 @@ import AppBar from "./AppBar/AppBar";
 import { useEffect } from "react";
 import { logout } from "../shared/utils/auth";
 import { useDispatch } from "react-redux";
-import { setUserDetails } from "../../store/slices/authSlice";
+// import { setUserDetails } from "../../store/slices/authSlice";
+import authSlice from "../../store/slices/authSlice";
 import { connectWithSocketServer } from "../../realtimeCommunication/socketConnection";
 
 const Wrapper = styled("div")({
@@ -22,7 +23,7 @@ const Dashboard = () => {
     if (!userDetails) {
       logout();
     } else {
-      dispatch(setUserDetails(JSON.parse(userDetails)));
+      dispatch(authSlice.actions.setUserDetails(JSON.parse(userDetails)));
       connectWithSocketServer(JSON.parse(userDetails));
     }
   }, []);
