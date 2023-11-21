@@ -13,7 +13,7 @@ const AlertNotification = () => {
       onClose={() => {
         dispatch(alertActions.closeAlertMessage());
       }}
-      autoHideDuration={6000}
+      autoHideDuration={3000}
     >
       <Alert severity="info">{alert.alertMessageContent}</Alert>
     </Snackbar>
