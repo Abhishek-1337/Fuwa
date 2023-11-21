@@ -10,12 +10,25 @@ import {
 } from "@mui/material";
 import InputBox from "../../shared/components/InputBox";
 import CustomPrimaryButton from "../../shared/components/CustomPrimaryButton";
+import { sendFriendInvitation } from "../../../store/slices/friendsSlice";
+import { useDispatch } from "react-redux";
 
 const AddFriendDialog = ({ isDialogOpen, closeDialogHandler }) => {
   const [mail, setMail] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleSendInvitation = () => {};
+  const handleSendInvitation = () => {
+    dispatch(
+      sendFriendInvitation(
+        {
+          targetMail: mail,
+        },
+        closeDialogHandler
+      )
+    );
+    setMail("");
+  };
 
   const handleCloseDialog = () => {
     closeDialogHandler();
@@ -25,6 +38,7 @@ const AddFriendDialog = ({ isDialogOpen, closeDialogHandler }) => {
   useEffect(() => {
     setIsFormValid(validateMail(mail));
   }, [mail, setIsFormValid]);
+
   return (
     <div>
       <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
