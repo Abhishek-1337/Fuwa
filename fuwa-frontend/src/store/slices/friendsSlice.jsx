@@ -21,14 +21,18 @@ const friendSlice = createSlice({
 export const sendFriendInvitation = (data, closeDialogHandler) => {
   return async (dispatch) => {
     const response = await api.sendFriendInvitation(data);
+    console.log(response);
     if (response.error) {
       dispatch(
-        alertActions.openAlertMessage(response?.message?.response?.data.message)
+        alertActions.openAlertMessage(
+          response?.message?.response?.data.message ||
+            response?.exception?.response?.data?.message
+        )
       );
     } else {
       dispatch(alertActions.openAlertMessage("Invitation has been sent"));
-      closeDialogHandler();
     }
+    closeDialogHandler();
   };
 };
 export default friendSlice;

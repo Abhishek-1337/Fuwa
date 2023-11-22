@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const FriendInvitation = require("../models/friendInvitationModel");
 
 exports.invite = catchAsync(async (req, res, next) => {
   const { targetMail } = req.body;
@@ -36,7 +37,15 @@ exports.invite = catchAsync(async (req, res, next) => {
     return new AppError("User is already added. Please check friends list");
   }
 
-  res.status(200).json({
+  //Save the new friend invitation to database
+  const newInvite = await FriendInvitation.create({
+    senderId: userId,
+    recieverId: targetUser._id,
+  });
+
+  //Check if the newly invited user is online
+
+  res.status(201).json({
     message: `Invite is being send`,
   });
 });
