@@ -21,6 +21,12 @@ const userSchema = mongoose.Schema({
     minlength: 8,
     select: false,
   },
+  friends: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 userSchema.pre("save", async function (next) {
