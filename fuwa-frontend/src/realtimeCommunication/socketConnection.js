@@ -1,4 +1,6 @@
 import { io } from "socket.io-client";
+import store from "../store/index";
+import { setPendingFriendInvitation } from "../store/slices/friendsSlice";
 
 let socket = null;
 export const connectWithSocketServer = (userDetails) => {
@@ -8,9 +10,16 @@ export const connectWithSocketServer = (userDetails) => {
       token: userDetails.token,
     },
   });
+
   //connect event when connected to server, passed with a callback function to execute when the event is triggered.
   socket.on("connect", () => {
     console.log("successfully connected with socket.io server");
     console.log(socket.id);
+  });
+
+  socket.on("friend-invitation", (data) => {
+    const { pendingFriendInvitation } = data;
+    console.log(pendingFriendInvitation);
+    store.dispatch(setPendingFriendInvitation(pendingFriendInvitation));
   });
 };
