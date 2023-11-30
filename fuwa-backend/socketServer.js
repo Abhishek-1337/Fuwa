@@ -1,6 +1,7 @@
 const newConnectionHandler = require("./socket handlers/newConnectionHandler");
 const authSocket = require("./controllers/authSocket");
 const disconnectHandler = require("./socket handlers/disconnectHandler");
+const { setSocketServerInstance } = require("./serverStore");
 
 const registerSocketServer = (server) => {
   const io = require("socket.io")(server, {
@@ -10,6 +11,7 @@ const registerSocketServer = (server) => {
     },
   });
 
+  setSocketServerInstance(io);
   //use authSocket middleware before allowing it to connect with client
   io.use((socket, next) => {
     authSocket.verifySocketToken(socket, next);
