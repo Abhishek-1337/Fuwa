@@ -18,6 +18,10 @@ const friendSlice = createSlice({
   },
 });
 
+export const setPendingFriendInvitation = (data) => {
+  return (dispatch) => {};
+};
+
 export const sendFriendInvitation = (data, closeDialogHandler) => {
   return async (dispatch) => {
     const response = await api.sendFriendInvitation(data);
@@ -35,4 +39,5 @@ export const sendFriendInvitation = (data, closeDialogHandler) => {
     closeDialogHandler();
   };
 };
+
 export default friendSlice;
