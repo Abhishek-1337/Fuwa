@@ -24,6 +24,7 @@ exports.invite = catchAsync(async (req, res, next) => {
 
   //Check if user is already been invited
   const inviteAlreadySent = await FriendInvitation.findOne({
+    senderId: userId,
     recieverId: targetUser._id,
   });
 
@@ -44,13 +45,13 @@ exports.invite = catchAsync(async (req, res, next) => {
   }
 
   //Save the new friend invitation to database
-  const newInvite = await FriendInvitation.create({
+  await FriendInvitation.create({
     senderId: userId,
     recieverId: targetUser._id,
   });
 
   //Send pending invitation info to specific user through socket
-  friendUpdates.updatePendingFriendInvitation(userId);
+  friendUpdates.updatePendingFriendInvitation(targetUser._id.toString());
 
   //Check if the newly invited user is online
   res.status(201).json({

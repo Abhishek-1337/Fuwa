@@ -12,15 +12,17 @@ const friendSlice = createSlice({
   name: "friend",
   initialState,
   reducers: {
-    setFriendInvitation(state, action) {
-      state.pendingFriendsInvitations = action.pendingFriendsInvitations;
+    setPendingFriendInvitation(state, action) {
+      state.pendingFriendsInvitations = action.pendingFriendInvitations;
+    },
+    setFriends(state, action) {
+      state.friends = action.friends;
+    },
+    setOnlineFriends(state, action) {
+      state.onlineFriends = action.onlineFriends;
     },
   },
 });
-
-export const setPendingFriendInvitation = (data) => {
-  return (dispatch) => {};
-};
 
 export const sendFriendInvitation = (data, closeDialogHandler) => {
   return async (dispatch) => {
@@ -40,4 +42,5 @@ export const sendFriendInvitation = (data, closeDialogHandler) => {
   };
 };
 
+export const friendActions = friendSlice.actions;
 export default friendSlice;

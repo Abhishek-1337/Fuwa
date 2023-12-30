@@ -26,7 +26,7 @@ exports.removeConnectedUser = (socketId) => {
 let activeConnection = [];
 
 exports.getActiveConnection = (userId) => {
-  connectedUser.forEach((key, value) => {
+  connectedUser.forEach((value, key) => {
     if (value.userId === userId) {
       activeConnection.push(key);
     }
