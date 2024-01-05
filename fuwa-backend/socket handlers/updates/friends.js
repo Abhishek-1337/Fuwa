@@ -8,7 +8,7 @@ exports.updatePendingFriendInvitation = async (userId) => {
   try {
     const pendingInvitation = await FriendInvitation.find({
       recieverId: userId,
-    }).populate({ path: "senderId", select: "_id username email" });
+    }).populate({ path: "senderId", select: "_id name email" });
     console.log(pendingInvitation);
     //get all active connection of user
     const recieveList = getActiveConnection(userId);

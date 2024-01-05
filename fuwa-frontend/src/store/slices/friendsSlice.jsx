@@ -4,7 +4,7 @@ import { alertActions } from "./alertSlice";
 
 const initialState = {
   friends: [],
-  pendingFriendsInvitations: [],
+  pendingFriendInvitations: [],
   onlineFriends: [],
 };
 
@@ -13,13 +13,14 @@ const friendSlice = createSlice({
   initialState,
   reducers: {
     setPendingFriendInvitation(state, action) {
-      state.pendingFriendsInvitations = action.pendingFriendInvitations;
+      console.log(action);
+      state.pendingFriendInvitations = action.payload;
     },
     setFriends(state, action) {
-      state.friends = action.friends;
+      state.friends = action.payload;
     },
     setOnlineFriends(state, action) {
-      state.onlineFriends = action.onlineFriends;
+      state.onlineFriends = action.payload;
     },
   },
 });
