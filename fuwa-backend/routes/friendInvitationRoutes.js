@@ -9,4 +9,16 @@ router.post(
   friendInvitationController.invite
 );
 
+router.post(
+  "/accept",
+  authController.protect,
+  friendInvitationController.acceptHandler
+);
+
+router.post(
+  "/reject",
+  authController.protect,
+  friendInvitationController.rejectHandler
+);
+
 module.exports = router;
