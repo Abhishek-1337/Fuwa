@@ -13,7 +13,6 @@ const MainContainer = styled("div")({
 
 const PendingInvitationsList = () => {
   const friend = useSelector((state) => state.friend);
-  console.log(friend);
   return (
     <MainContainer>
       {friend.pendingFriendInvitations.map((invitee) => (

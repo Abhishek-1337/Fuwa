@@ -2,22 +2,22 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import Avatar from "../../../shared/components/Avatar";
 import InvitationDecisionButton from "./InvitationDecisionButton";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  acceptFriendInvitation,
+  rejectFriendInvitation,
+} from "../../../../store/slices/friendsSlice";
 
-const PendingInvitationItem = ({
-  id,
-  username,
-  mail,
-  acceptFriendInvitation = () => {},
-  rejectFriendInvitation = () => {},
-}) => {
+const PendingInvitationItem = ({ id, username, mail }) => {
   const [buttonDisable, setButtonDisable] = useState(false);
+  const dispatch = useDispatch();
   const handleAcceptInvitation = () => {
-    acceptFriendInvitation({ id });
+    dispatch(acceptFriendInvitation({ id }));
     setButtonDisable(true);
   };
 
   const handleRejectInvitation = () => {
-    rejectFriendInvitation({ id });
+    dispatch(rejectFriendInvitation({ id }));
     setButtonDisable(true);
   };
   return (

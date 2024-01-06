@@ -13,7 +13,6 @@ const friendSlice = createSlice({
   initialState,
   reducers: {
     setPendingFriendInvitation(state, action) {
-      console.log(action);
       state.pendingFriendInvitations = action.payload;
     },
     setFriends(state, action) {
@@ -28,7 +27,6 @@ const friendSlice = createSlice({
 export const sendFriendInvitation = (data, closeDialogHandler) => {
   return async (dispatch) => {
     const response = await api.sendFriendInvitation(data);
-    console.log(response);
     if (response.error) {
       dispatch(
         alertActions.openAlertMessage(
@@ -40,6 +38,28 @@ export const sendFriendInvitation = (data, closeDialogHandler) => {
       dispatch(alertActions.openAlertMessage("Invitation has been sent"));
     }
     closeDialogHandler();
+  };
+};
+
+export const acceptFriendInvitation = (data) => {
+  return async (dispatch) => {
+    const response = await api.acceptFriendInvitation(data);
+    if (response.error) {
+      dispatch(alertActions.openAlertMessage(response?.exception?.message));
+    } else {
+      dispatch(alertActions.openAlertMessage("Invitation accepted"));
+    }
+  };
+};
+
+export const rejectFriendInvitation = (data) => {
+  return async (dispatch) => {
+    const response = await api.rejectFriendInvitation(data);
+    if (response.error) {
+      dispatch(alertActions.openAlertMessage(response?.exception?.message));
+    } else {
+      dispatch(alertActions.openAlertMessage("Invitation accepted"));
+    }
   };
 };
 
