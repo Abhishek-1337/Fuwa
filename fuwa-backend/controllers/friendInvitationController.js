@@ -58,3 +58,47 @@ exports.invite = catchAsync(async (req, res, next) => {
     message: `Invite is being send`,
   });
 });
+
+exports.rejectHandler = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+  const userId = req.user._id;
+
+  const invitation = await FriendInvitation.findById(id);
+  if (!invitation) {
+    res.status(500).json({
+      status: "error",
+      message: "Invitation not found",
+    });
+  }
+
+  await FriendInvitation.findByIdAndDelete(id);
+  friendUpdates.updatePendingFriendInvitation(userId);
+});
+
+exports.acceptHandler = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+
+  //Check if invitation is in the database
+  const invitation = await FriendInvitation.findById(id);
+  if (!invitation) {
+    return res.status(401).json({
+      status: "error",
+      message: "Something went wrong",
+    });
+  }
+  await FriendInvitation.findByIdAndDelete(id);
+  const { senderId, recieverId } = invitation;
+
+  //Update friends array for both of the user
+  const senderUser = await User.findById(senderId);
+  senderUser.friends = [...senderUser.friends, recieverId];
+
+  const recieverUser = await User.findById(recieverId);
+  recieverUser.friends = [...recieverUser.friends, senderId];
+
+  await senderUser.save();
+  await recieverUser.save();
+
+  //Update friends pending list in sidebar
+  friendUpdates.updatePendingFriendInvitation(recieverId.toString());
+});
