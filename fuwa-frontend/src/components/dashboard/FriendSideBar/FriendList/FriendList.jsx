@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import FriendsListItem from "./FriendsListItem";
+import { useSelector } from "react-redux";
 
 const DUMMY = [
   {
@@ -25,9 +26,10 @@ const MainContainer = styled("div")({
 });
 
 const FriendList = () => {
+  const friends = useSelector((state) => state.friend.friends);
   return (
     <MainContainer>
-      {DUMMY.map((user) => (
+      {friends.map((user) => (
         <FriendsListItem
           id={user.id}
           key={user.id}
