@@ -25,4 +25,9 @@ export const connectWithSocketServer = (userDetails) => {
       friendActions.setPendingFriendInvitation(pendingFriendInvitations)
     );
   });
+
+  socket.on("friend-list", (data) => {
+    const { friends } = data;
+    store.dispatch(friendActions.setFriends(friends));
+  });
 };
