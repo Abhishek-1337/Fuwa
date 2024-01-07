@@ -33,9 +33,7 @@ exports.invite = catchAsync(async (req, res, next) => {
   }
 
   //Check if user is already your friend
-  const userAlreadyFriend = targetUser.friends.find((friendId) => {
-    return friendId === userId;
-  });
+  const userAlreadyFriend = targetUser.friends.includes(userId);
 
   if (userAlreadyFriend) {
     return new AppError(
