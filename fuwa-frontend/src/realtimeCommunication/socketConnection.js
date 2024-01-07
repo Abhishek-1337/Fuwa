@@ -26,8 +26,13 @@ export const connectWithSocketServer = (userDetails) => {
     );
   });
 
-  socket.on("friend-list", (data) => {
+  socket.on("friends-list", (data) => {
     const { friends } = data;
     store.dispatch(friendActions.setFriends(friends));
+  });
+
+  socket.on("online-users", (data) => {
+    const { onlineUsers } = data;
+    store.dispatch(friendActions.setOnlineFriends(onlineUsers));
   });
 };
