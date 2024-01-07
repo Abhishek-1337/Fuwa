@@ -3,6 +3,9 @@ import Avatar from "../../../shared/components/Avatar";
 import OnlineIndicator from "./OnlineIndicator";
 
 const FriendsListItem = ({ username, isOnline }) => {
+  // const chooseActiveChat = () => {
+
+  // }
   return (
     <Button
       style={{

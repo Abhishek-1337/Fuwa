@@ -39,4 +39,5 @@ exports.getOnlineUsers = (userId) => {
   connectedUser.forEach((value, key) => {
     onlineUsers.push({ socketId: key, userId: value.userId });
   });
+  return onlineUsers;
 };
