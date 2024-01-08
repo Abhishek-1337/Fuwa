@@ -23,9 +23,8 @@ exports.removeConnectedUser = (socketId) => {
   }
 };
 
-let activeConnection = [];
-
 exports.getActiveConnection = (userId) => {
+  let activeConnection = [];
   connectedUser.forEach((value, key) => {
     if (value.userId === userId) {
       activeConnection.push(key);
@@ -37,7 +36,7 @@ exports.getActiveConnection = (userId) => {
 exports.getOnlineUsers = (userId) => {
   let onlineUsers = [];
   connectedUser.forEach((value, key) => {
-    onlineUsers.push({ socketId: key, userId: value.userId });
+    onlineUsers.push(value.userId);
   });
   return onlineUsers;
 };
