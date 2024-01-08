@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import DropdownMenu from "./DropdownMenu";
+import ChatOptionLabel from "./ChatOptionLabel";
 
 const MainContainer = styled("div")({
   position: "absolute",
@@ -18,6 +19,7 @@ const MainContainer = styled("div")({
 const AppBar = () => {
   return (
     <MainContainer>
+      <ChatOptionLabel />
       <DropdownMenu />{" "}
     </MainContainer>
   );
