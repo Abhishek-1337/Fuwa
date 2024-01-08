@@ -6,8 +6,8 @@ const newConnectionHandler = async (socket, io) => {
   serverStore.setConnectedUser({ socketId: socket.id, userId: userDetails.id });
   console.log(userDetails);
   //Whenever new socket connection is established display all the info about connected user.
-  friends.updatePendingFriendInvitation(userDetails.id);
   friends.updateFriends(userDetails.id);
+  friends.updatePendingFriendInvitation(userDetails.id);
 };
 
 module.exports = newConnectionHandler;

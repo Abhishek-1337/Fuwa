@@ -71,6 +71,10 @@ exports.rejectHandler = catchAsync(async (req, res, next) => {
 
   await FriendInvitation.findByIdAndDelete(id);
   friendUpdates.updatePendingFriendInvitation(userId);
+  res.status(200).json({
+    status: "success",
+    message: "Invitation rejected",
+  });
 });
 
 exports.acceptHandler = catchAsync(async (req, res, next) => {
@@ -86,7 +90,7 @@ exports.acceptHandler = catchAsync(async (req, res, next) => {
   }
   await FriendInvitation.findByIdAndDelete(id);
   const { senderId, recieverId } = invitation;
-
+A
   //Update friends array for both of the user
   const senderUser = await User.findById(senderId);
   senderUser.friends = [...senderUser.friends, recieverId];
@@ -98,5 +102,11 @@ exports.acceptHandler = catchAsync(async (req, res, next) => {
   await recieverUser.save();
 
   //Update friends pending list in sidebar
+  friendUpdates.updateFriends(senderId.toString());
+  friendUpdates.updateFriends(recieverId.toString());
   friendUpdates.updatePendingFriendInvitation(recieverId.toString());
+  res.status(200).json({
+    status: "success",
+    message: "Friend added",
+  });
 });
