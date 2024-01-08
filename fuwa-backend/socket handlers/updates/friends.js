@@ -14,8 +14,7 @@ exports.updatePendingFriendInvitation = async (userId) => {
     //get all active connection of user
     const recieveList = getActiveConnection(userId);
     const io = getSocketServerInstance();
-    console.log("recieveList");
-    console.log(recieveList);
+
     recieveList.forEach((recieverSocketId) => {
       io.to(recieverSocketId).emit("friend-invitation", {
         pendingFriendInvitations: pendingInvitation ? pendingInvitation : [],
@@ -36,7 +35,6 @@ exports.updateFriends = async (userId) => {
           select: "_id name email",
         }
       );
-
       if (user) {
         const friendsList = user.friends.map((friend) => {
           return {
@@ -47,7 +45,6 @@ exports.updateFriends = async (userId) => {
         });
 
         const io = getSocketServerInstance();
-
         recieverList.forEach((recieveSocketId) => {
           io.to(recieveSocketId).emit("friends-list", {
             friends: friendsList ? friendsList : [],
