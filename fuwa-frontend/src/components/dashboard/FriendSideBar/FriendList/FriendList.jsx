@@ -7,28 +7,17 @@ const MainContainer = styled("div")({
   width: "100%",
 });
 
-const checkFriendsOnline = (friends = [], onlineFriends = []) => {
-  friends.forEach((friend) => {
-    const userOnline = onlineFriends.find((user) => {
-      return user.id === friend.id;
-    });
-    friend = { ...friend, isOnline: userOnline ? true : false };
-  });
-
-  return friends;
-};
-
 const FriendList = () => {
   const friends = useSelector((state) => state.friend.friends);
   const onlineFriends = useSelector((state) => state.friend.onlineFriends);
   return (
     <MainContainer>
-      {checkFriendsOnline(friends, onlineFriends).map((user) => (
+      {friends.map((friend) => (
         <FriendsListItem
-          id={user.id}
-          key={user.id}
-          username={user.name}
-          isOnline={user.isOnline}
+          id={friend.id}
+          key={friend.id}
+          username={friend.name}
+          isOnline={onlineFriends.includes(friend.id)}
         />
       ))}
     </MainContainer>

@@ -12,7 +12,7 @@ const OnlineIndicator = () => {
         right: "5px",
       }}
     >
-      <FiberManualRecordIcon />
+      <FiberManualRecordIcon sx={{ height: 15, width: 15 }} />
     </Box>
   );
 };
