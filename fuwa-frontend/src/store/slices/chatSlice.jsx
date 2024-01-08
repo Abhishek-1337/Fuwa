@@ -6,16 +6,23 @@ const initialState = {
   messages: [],
 };
 
+export const chatTypes = {
+  DIRECT: "DIRECT",
+  GROUP: "GROUP",
+};
+
 const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
     setChosenChatDetails(state, action) {
-      (state.chosenChatDetails = action.payload.chatDetails),
-        (state.chatType = action.payload.chatType);
+      console.log(action.payload);
+      const { chatDetails, chatType } = action.payload;
+      state.chosenChatDetails = chatDetails;
+      state.chatType = chatType;
     },
     setMessages(state, action) {
-      state.setMessages = action.payload.messages;
+      state.messages = action.payload.messages;
     },
   },
 });
