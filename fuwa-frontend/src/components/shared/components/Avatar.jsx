@@ -14,8 +14,14 @@ const AvatarReview = styled("div")({
   color: "white",
 });
 
-const Avatar = ({ username }) => {
-  return <AvatarReview>{username.substring(0, 2)}</AvatarReview>;
+const Avatar = ({ username, large }) => {
+  return (
+    <AvatarReview
+      style={large ? { width: "60px", height: "60px", fontSize: "20px" } : {}}
+    >
+      {username.substring(0, 2)}
+    </AvatarReview>
+  );
 };
 
 export default Avatar;
