@@ -37,3 +37,8 @@ export const connectWithSocketServer = (userDetails) => {
     store.dispatch(friendActions.setOnlineFriends(onlineUsers));
   });
 };
+
+export const sendDirectMessages = (data) => {
+  console.log(data);
+  socket.emit("direct-message", data);
+};
