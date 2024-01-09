@@ -42,6 +42,10 @@ const registerSocketServer = (server) => {
     socket.on("direct-message", (data) => {
       directMessageHandler(socket, data);
     });
+
+    socket.on("direct-chat-history", (data) => {
+      directChatHistoryHandler(socket, data);
+    });
   });
 
   setInterval(() => {
