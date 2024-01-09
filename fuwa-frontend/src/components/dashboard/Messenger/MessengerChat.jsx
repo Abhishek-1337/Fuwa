@@ -5,16 +5,19 @@ import { useEffect } from "react";
 
 const Wrapper = styled("div")({
   flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 });
 
-const MessengerChat = (chosenChatDetails) => {
+const MessengerChat = ({ chosenChatDetails }) => {
   useEffect(() => {
     //fetch chat history of specific user with user id
   }, [chosenChatDetails]);
   return (
     <Wrapper>
       <Messages />
-      <MessageInput />
+      <MessageInput chosenChatDetails={chosenChatDetails} />
     </Wrapper>
   );
 };

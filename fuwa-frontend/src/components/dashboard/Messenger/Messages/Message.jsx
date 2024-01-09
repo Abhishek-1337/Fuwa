@@ -21,6 +21,7 @@ const MessageContent = styled("div")({
 });
 
 const SameDayMessageContent = styled("div")({
+  width: "97%",
   color: "#DCDDDE",
 });
 

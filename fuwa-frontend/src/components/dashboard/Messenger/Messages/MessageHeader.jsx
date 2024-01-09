@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import Avatar from "../../../shared/components/Avatar";
 
 const MainContainer = styled("div")({
-  width: "100%",
+  width: "97%",
   display: "flex",
   flexDirection: "column",
   marginTop: "10px",

@@ -5,7 +5,7 @@ import DUMMY_MESSAGES from "./DUMMY_MESSAGES";
 import Message from "./Message";
 
 const MainContainer = styled("div")({
-  height: "calc(100%-60px)",
+  height: "calc(100%-100px)",
   display: "flex",
   flexDirection: "column",
 });
