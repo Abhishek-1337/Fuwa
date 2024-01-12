@@ -7,9 +7,11 @@ const messageSchema = mongoose.Schema({
   },
   content: {
     type: String,
+    required: [true, "There should be some content to sent to user"],
   },
   date: {
     type: Date,
+    require: [true, "Every message should be labeled with its date"],
   },
   type: {
     type: String,
