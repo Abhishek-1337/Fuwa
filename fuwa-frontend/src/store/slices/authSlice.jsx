@@ -32,6 +32,7 @@ export const signIn = (userDetail, navigate) => {
         email: response.data.user.email,
         token: response.data.token,
         name: response.data.user.name,
+        id: response.data.user._id,
       };
       localStorage.setItem("user", JSON.stringify(userDetails));
       dispatch(authSlice.actions.setUserDetails(userDetails));
@@ -45,6 +46,7 @@ export const signUp = (userDetail, navigate) => {
     // console.log(userDetail);
     let response;
     response = await register(userDetail);
+    console.log(response);
 
     // console.log(response.message.response.data.message);
     if (response.error) {
@@ -56,6 +58,7 @@ export const signUp = (userDetail, navigate) => {
         email: response.data.user.email,
         token: response.data.token,
         name: response.data.user.name,
+        id: response.data.user._id,
       };
       localStorage.setItem("user", JSON.stringify(userDetails));
       dispatch(authSlice.actions.setUserDetails(userDetails));

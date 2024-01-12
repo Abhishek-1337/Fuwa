@@ -7,9 +7,9 @@ exports.directChatHistoryHandler = async (socket, data) => {
     const recieverId = data.recieverId;
     const socketId = socket.id;
 
+    console.log(userId, recieverId);
     const conversation = await Conversation.findOne({
       participants: { $all: [userId, recieverId] },
-      type: "DIRECT",
     });
 
     if (conversation) {

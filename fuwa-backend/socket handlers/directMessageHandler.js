@@ -1,6 +1,6 @@
 const Message = require("../models/message");
 const Conversation = require("../models/conversations");
-const chatHistoryUpdate = require("./updates/chat");
+const { chatHistoryUpdate } = require("./updates/chat");
 
 exports.directMessageHandler = async (socket, data) => {
   try {
@@ -13,14 +13,12 @@ exports.directMessageHandler = async (socket, data) => {
       content,
       author: userId,
       type: "DIRECT",
-      data: new Date(),
+      date: new Date(),
     });
 
     const conversation = await Conversation.findOne({
       participants: { $all: [userId, recieverId] },
-      messages: [message._id],
     });
-
     //If there's already a conversation between reciever and sender then push the message id to the messages field in the document
     if (conversation) {
       conversation.messages.push(message);
@@ -29,13 +27,13 @@ exports.directMessageHandler = async (socket, data) => {
       //Update chat in client side if online
       chatHistoryUpdate(conversation._id.toString());
     } else {
-      await Conversation.create({
+      const newConversation = await Conversation.create({
         participants: [userId, recieverId],
         messages: [message._id],
       });
 
       //update chat in client side if they are online
-      chatHistoryUpdate(conversation._id.toString());
+      chatHistoryUpdate(newConversation._id.toString());
     }
   } catch (err) {
     console.log(err);

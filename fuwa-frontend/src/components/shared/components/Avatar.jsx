@@ -19,7 +19,7 @@ const Avatar = ({ username, large }) => {
     <AvatarReview
       style={large ? { width: "60px", height: "60px", fontSize: "20px" } : {}}
     >
-      {username.substring(0, 2)}
+      {username?.substring(0, 2)}
     </AvatarReview>
   );
 };

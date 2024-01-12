@@ -23,7 +23,7 @@ exports.chatHistoryUpdate = async (
 
     if (toSpecifiedSocketId) {
       //update chat history for the user
-      io.to(toSpecifiedSocketId).emit("direct-chat-history", {
+      return io.to(toSpecifiedSocketId).emit("direct-chat-history", {
         messages: conversation.messages,
         participants: conversation.participants,
       });

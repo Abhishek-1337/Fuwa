@@ -16,13 +16,12 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     setChosenChatDetails(state, action) {
-      console.log(action.payload);
       const { chatDetails, chatType } = action.payload;
       state.chosenChatDetails = chatDetails;
       state.chatType = chatType;
     },
     setMessages(state, action) {
-      state.messages = action.payload.messages;
+      state.messages = action.payload;
     },
   },
 });

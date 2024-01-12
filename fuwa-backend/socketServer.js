@@ -5,6 +5,9 @@ const { setSocketServerInstance, getOnlineUsers } = require("./serverStore");
 const {
   directMessageHandler,
 } = require("./socket handlers/directMessageHandler");
+const {
+  directChatHistoryHandler,
+} = require("./socket handlers/directChatHistoryHandler");
 
 const registerSocketServer = (server) => {
   const io = require("socket.io")(server, {
