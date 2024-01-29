@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const MainContainer = styled("div")({
   height: "50%",
