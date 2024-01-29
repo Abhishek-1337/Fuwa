@@ -34,11 +34,15 @@ export const updateActiveRooms = (data) => {
 };
 
 export const joinRoom = (roomId) => {
-  store.dispatch(roomActions.setRoomDetails({ roomId }));
-  store.dispatch(
-    roomActions.setOpenRoom({ isUserInRoom: true, isUserRoomCreator: false })
-  );
-  socketConnection.joinRoom({ roomId });
+  const successCallbackFn = () => {
+    store.dispatch(roomActions.setRoomDetails({ roomId }));
+    store.dispatch(
+      roomActions.setOpenRoom({ isUserInRoom: true, isUserRoomCreator: false })
+    );
+    socketConnection.joinRoom({ roomId });
+  };
+
+  webRTCHandler.getLocalStreamPreview(false, successCallbackFn);
 };
 
 export const closeRoom = () => {

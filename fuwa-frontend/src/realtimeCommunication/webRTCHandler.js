@@ -17,7 +17,7 @@ export const getLocalStreamPreview = (onlyAudio = false, callbackFn) => {
   navigator.mediaDevices
     .getUserMedia(constraints)
     .then((stream) => {
-      // store.dispatch(roomActions.setLocalStream(stream));
+      store.dispatch(roomActions.setLocalStream(stream));
       callbackFn();
     })
     .catch((err) => {

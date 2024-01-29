@@ -13,7 +13,7 @@ const VideoContainer = () => {
   const room = useSelector((state) => state.room);
   return (
     <MainContainer>
-      <Video isLocalStream={room.isLocalStream} />
+      <Video isLocalStream={room.isLocalStream} stream={room.localStream} />
     </MainContainer>
   );
 };

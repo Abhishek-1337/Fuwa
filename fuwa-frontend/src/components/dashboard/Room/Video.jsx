@@ -12,39 +12,41 @@ const VideoEl = styled("video")({
   width: "100%",
 });
 
-const Video = ({ isLocalStream }) => {
+const Video = ({ stream, isLocalStream }) => {
   const videoRef = useRef();
-  const [localStream, setLocalStream] = useState(null);
-  console.log(localStream);
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true, video: true })
-      .then((stream) => {
-        setLocalStream(stream);
-        // videoRef.current.src = stream;
-      });
-  }, []);
-
-  useEffect(() => {
-    if (localStream) {
-      console.log(videoRef.current);
-      videoRef.current.srcObject = localStream;
-    }
-  }, [localStream]);
+  // const videoRef = useRef();
+  // const [localStream, setLocalStream] = useState(null);
+  // console.log(localStream);
+  // useEffect(() => {
+  //   navigator.mediaDevices
+  //     .getUserMedia({ audio: true, video: true })
+  //     .then((stream) => {
+  //       setLocalStream(stream);
+  //       // videoRef.current.src = stream;
+  //     });
+  // }, []);
 
   // useEffect(() => {
-  //   const video = videoRef.current;
-  //   video.srcObject = stream;
+  //   if (localStream) {
+  //     console.log(videoRef.current);
+  //     videoRef.current.srcObject = localStream;
+  //   }
+  // }, [localStream]);
 
-  //   video.onLoadedMetaData = () => {
-  //     video.play();
-  //   };
-  // }, [stream]);
+  useEffect(() => {
+    const video = videoRef.current;
+    console.log(videoRef);
+    video.srcObject = stream;
+
+    video.onloadedmetadata = () => {
+      video.play();
+    };
+  }, [stream]);
   return (
     <MainContainer>
-      {localStream && (
-        <VideoEl autoPlay muted={isLocalStream ? true : false} ref={videoRef} />
-      )}
+      {/* {stream && ( */}
+      <VideoEl ref={videoRef} autoPlay muted={isLocalStream} />
+      {/* )} */}
     </MainContainer>
   );
 };
