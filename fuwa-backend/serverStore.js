@@ -1,6 +1,8 @@
 const connectedUser = new Map();
+const { v4: uuidv4 } = require("uuid");
 
 let io = null;
+let activeRooms = [];
 
 exports.setSocketServerInstance = (ioInstance) => {
   io = ioInstance;
@@ -39,4 +41,65 @@ exports.getOnlineUsers = (userId) => {
     onlineUsers.push(value.userId);
   });
   return onlineUsers;
+};
+
+exports.setNewRoomDetails = (userId, socketId) => {
+  const newActiveRoom = {
+    roomCreator: {
+      userId,
+      socketId,
+    },
+    participants: [
+      {
+        userId,
+        socketId,
+      },
+    ],
+    roomId: uuidv4(),
+  };
+
+  activeRooms = [...activeRooms, newActiveRoom];
+  return activeRooms;
+};
+
+exports.getActiveRooms = () => {
+  return [...activeRooms];
+};
+
+exports.getActiveRoom = (roomId) => {
+  return activeRooms.find((room) => room.roomId === roomId);
+};
+
+exports.joinActiveRoom = (data) => {
+  const activeRoom = activeRooms.find((room) => room.roomId === data.roomId);
+  activeRooms = activeRooms.filter((room) => room.roomId !== data.roomId);
+
+  const updatedRoom = {
+    ...activeRoom,
+    participants: [
+      ...activeRoom.participants,
+      { userId: data.userId, socketId: data.socketId },
+    ],
+  };
+
+  console.log("updated room");
+  console.log(updatedRoom);
+
+  activeRooms.push(updatedRoom);
+};
+
+exports.leaveActiveRoom = (data) => {
+  const activeRoom = activeRooms.find((room) => room.roomId === data.roomId);
+
+  if (activeRoom) {
+    activeRooms = activeRooms.filter((room) => room.roomId !== data.roomId);
+    const copyActiveRoom = { ...activeRoom };
+    copyActiveRoom.participants = copyActiveRoom.participants.filter(
+      (participant) => participant.socketId !== data.socketId
+    );
+
+    if (copyActiveRoom.participants.length > 0) {
+      activeRooms.push(copyActiveRoom);
+    }
+  }
 };
