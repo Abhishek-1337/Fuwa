@@ -30,6 +30,10 @@ const roomSlice = createSlice({
     setLocalStream(state, action) {
       state.localStream = action.payload;
     },
+    setAudioOnly(state, action) {
+      console.log(action);
+      state.audioOnly = action.payload;
+    },
   },
 });
 
