@@ -54,5 +54,11 @@ export const closeRoom = () => {
   store.dispatch(
     roomActions.setOpenRoom({ isUserInRoom: false, isUserRoomCreator: false })
   );
+
+  const localStream = store.getState().room.localStream;
+  if (localStream) {
+    localStream.getTracks().forEach((track) => track.stop());
+  }
+  store.dispatch(roomActions.setLocalStream(null));
   socketConnection.closeRoom({ roomId });
 };
