@@ -3,6 +3,7 @@ import authSlice from "./slices/authSlice";
 import alertSlice from "./slices/alertSlice";
 import friendSlice from "./slices/friendsSlice";
 import chatSlice from "./slices/chatSlice";
+import roomSlice from "./slices/roomSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     alert: alertSlice.reducer,
     friend: friendSlice.reducer,
     chat: chatSlice.reducer,
+    room: roomSlice.reducer,
   },
 });
 
