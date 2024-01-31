@@ -11,9 +11,13 @@ const MainContainer = styled("div")({
 
 const VideoContainer = () => {
   const room = useSelector((state) => state.room);
+
   return (
     <MainContainer>
       <Video isLocalStream={room.isLocalStream} stream={room.localStream} />
+      {room.remoteStreams.map((remoteStream) => {
+        return <Video stream={remoteStream} key={remoteStream.id} />;
+      })}
     </MainContainer>
   );
 };
