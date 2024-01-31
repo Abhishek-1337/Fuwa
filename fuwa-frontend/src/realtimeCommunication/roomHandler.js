@@ -8,6 +8,8 @@ export const createNewRoom = () => {
     store.dispatch(
       roomActions.setOpenRoom({ isUserInRoom: true, isUserRoomCreator: true })
     );
+    const onlyAudio = store.getState().room.audioOnly;
+    store.dispatch(roomActions.setIsUserJoinedWithAudioOnly(onlyAudio));
     socketConnection.createNewRoom();
   };
   const onlyAudio = store.getState().room.audioOnly;
@@ -48,6 +50,9 @@ export const joinRoom = (roomId) => {
     store.dispatch(
       roomActions.setOpenRoom({ isUserInRoom: true, isUserRoomCreator: false })
     );
+
+    const onlyAudio = store.getState().room.audioOnly;
+    store.dispatch(roomActions.setIsUserJoinedWithAudioOnly(onlyAudio));
     socketConnection.joinRoom({ roomId });
   };
   const onlyAudio = store.getState().room.audioOnly;
@@ -62,6 +67,17 @@ export const closeRoom = () => {
   store.dispatch(
     roomActions.setOpenRoom({ isUserInRoom: false, isUserRoomCreator: false })
   );
+
+  const screenSharingStream = store.getState().room.screenSharingStream;
+  if (screenSharingStream) {
+    screenSharingStream.getTracks((track) => track.stop());
+    store.dispatch(
+      roomActions.setScreenSharingStream({
+        isScreenSharingActive: false,
+        screenSharingStream: null,
+      })
+    );
+  }
 
   const localStream = store.getState().room.localStream;
   if (localStream) {

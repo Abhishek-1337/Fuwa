@@ -11,6 +11,7 @@ const initialState = {
   audioOnly: false,
   screenSharingStream: null,
   isScreenSharingActive: false,
+  isUserJoinedWithAudioOnly: false,
 };
 
 const roomSlice = createSlice({
@@ -38,8 +39,11 @@ const roomSlice = createSlice({
       state.remoteStreams = action.payload;
     },
     setScreenSharingStream(state, action) {
-      state.isScreenSharingActive = action.payload ? true : false;
-      state.screenSharingStream = action.payload || null;
+      state.isScreenSharingActive = action.payload.isScreenSharingActive;
+      state.screenSharingStream = action.payload.screenSharingStream;
+    },
+    setIsUserJoinedWithAudioOnly(state, action) {
+      state.isUserJoinedWithAudioOnly = action.payload;
     },
   },
 });

@@ -21,13 +21,17 @@ const RoomButtonsContainer = ({ isMinimized, roomResizeHandler }) => {
   const room = useSelector((state) => state.room);
   return (
     <MainContainer>
-      <ScreenShare
-        localStream={room.localStream}
-        isScreenSharingActive={room.isScreenSharingActive}
-        screenSharingActive={room.screenSharingStream}
-      />
+      {!room.isUserJoinedWithAudioOnly && (
+        <ScreenShare
+          localStream={room.localStream}
+          isScreenSharingActive={room.isScreenSharingActive}
+          screenSharingActive={room.screenSharingStream}
+        />
+      )}
       <Mic localStream={room.localStream} />
-      <Camera localStream={room.localStream} />
+      {!room.isUserJoinedWithAudioOnly && (
+        <Camera localStream={room.localStream} />
+      )}
       <CloseRoom />
       <RoomResizeButton
         isMinimized={isMinimized}
