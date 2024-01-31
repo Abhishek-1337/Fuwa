@@ -12,7 +12,7 @@ const VideoEl = styled("video")({
   width: "100%",
 });
 
-const Video = ({ stream, isLocalStream }) => {
+const Video = ({ stream, isLocalStream = false }) => {
   const videoRef = useRef();
   // const videoRef = useRef();
   // const [localStream, setLocalStream] = useState(null);

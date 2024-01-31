@@ -8,16 +8,16 @@ const AddActiveRoomButton = ({
   numberOfParticipants,
   isUserInRoom,
 }) => {
+  // const participantsInLimit = numberOfParticipants < 3;
+  const roomTitle = `Creator: ${creatorUsername} Connected: ${numberOfParticipants}`;
+
   const roomJoinClickHandler = () => {
     //To join this room the number of participants should be less than 4
-    if (numberOfParticipants < 4) {
+    if (numberOfParticipants < 4 && !isUserInRoom) {
       //join
       roomHandler.joinRoom(roomId);
     }
   };
-
-  const participantsInLimit = numberOfParticipants < 3;
-  const roomTitle = `Creator: ${creatorUsername} Connected: ${numberOfParticipants}`;
 
   return (
     <Tooltip title={roomTitle}>
@@ -34,7 +34,6 @@ const AddActiveRoomButton = ({
           color: "white",
           backgroundColor: "#5865F2",
         }}
-        disabled={isUserInRoom || !participantsInLimit}
       >
         <Avatar username={creatorUsername} />
       </Button>
