@@ -59,7 +59,7 @@ exports.setNewRoomDetails = (userId, socketId) => {
   };
 
   activeRooms = [...activeRooms, newActiveRoom];
-  return activeRooms;
+  return newActiveRoom;
 };
 
 exports.getActiveRooms = () => {
@@ -67,7 +67,9 @@ exports.getActiveRooms = () => {
 };
 
 exports.getActiveRoom = (roomId) => {
-  return activeRooms.find((room) => room.roomId === roomId);
+  return activeRooms.find((room) => {
+    return room.roomId === roomId;
+  });
 };
 
 exports.joinActiveRoom = (data) => {
@@ -82,24 +84,22 @@ exports.joinActiveRoom = (data) => {
     ],
   };
 
-  console.log("updated room");
-  console.log(updatedRoom);
-
   activeRooms.push(updatedRoom);
 };
-
+ 
 exports.leaveActiveRoom = (data) => {
+ 
   const activeRoom = activeRooms.find((room) => room.roomId === data.roomId);
-
+  activeRooms = activeRooms.filter((room) => room.roomId !== data.roomId);
   if (activeRoom) {
-    activeRooms = activeRooms.filter((room) => room.roomId !== data.roomId);
-    const copyActiveRoom = { ...activeRoom };
-    copyActiveRoom.participants = copyActiveRoom.participants.filter(
-      (participant) => participant.socketId !== data.socketId
-    );
+    activeRoom.participants = activeRoom.participants.filter((participant) => {
+      return participant.socketId !== data.socketId;
+    });
+    console.log("copy active room");
+    console.log(activeRoom);
+  }
 
-    if (copyActiveRoom.participants.length > 0) {
-      activeRooms.push(copyActiveRoom);
-    }
+  if (activeRoom.participants.length > 0) {
+    activeRooms.push(activeRoom);
   }
 };
