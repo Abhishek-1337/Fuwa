@@ -26,7 +26,12 @@ const ScreenShare = ({
       }
 
       if (stream) {
-        roomActions.setScreenSharingStream(stream);
+        dispatch(
+          roomActions.setScreenSharingStream({
+            isScreenSharingActive: true,
+            screenSharingStream: stream,
+          })
+        );
         webRTCHandler.switchOutgoingStream(stream);
         //webRTC switchOutgoing video tracks
       }
@@ -34,7 +39,12 @@ const ScreenShare = ({
       //switchOutgoing video tracks
       screenSharingStream.getTracks().forEach((track) => track.stop);
       webRTCHandler.switchOutgoingStream(localStream);
-      dispatch(roomActions.setScreenSharingStream(null));
+      dispatch(
+        roomActions.setScreenSharingStream({
+          isScreenSharingActive: false,
+          screenSharingStream: null,
+        })
+      );
     }
   };
   return (
