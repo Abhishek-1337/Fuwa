@@ -3,14 +3,15 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import { useState } from "react";
 
-const Camera = () => {
-  const [isCamEnabled, setIsCamEnabled] = useState(false);
+const Camera = ({ localStream }) => {
+  const [isCamEnabled, setIsCamEnabled] = useState(true);
   const cameraToggle = () => {
+    localStream.getVideoTracks()[0].enabled = !isCamEnabled;
     setIsCamEnabled(!isCamEnabled);
   };
   return (
     <IconButton onClick={cameraToggle} style={{ color: "white" }}>
-      {isCamEnabled ? <VideocamOffIcon /> : <VideocamIcon />}
+      {isCamEnabled ? <VideocamIcon /> : <VideocamOffIcon />}
     </IconButton>
   );
 };
