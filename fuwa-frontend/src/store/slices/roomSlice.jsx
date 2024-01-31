@@ -34,6 +34,9 @@ const roomSlice = createSlice({
       console.log(action);
       state.audioOnly = action.payload;
     },
+    setRemoteStream(state, action) {
+      state.remoteStreams = action.payload;
+    },
   },
 });
 
