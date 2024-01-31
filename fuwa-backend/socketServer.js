@@ -11,7 +11,13 @@ const {
 } = require("./socket handlers/directChatHistoryHandler");
 const roomJoinHandler = require("./socket handlers/roomJoinHandler");
 const { roomLeaveHandler } = require("./socket handlers/roomLeaveHandler");
+const {
+  peerConnectInitializationHandler,
+} = require("./socket handlers/peerConnectInitializationHandler");
 const serverStore = require("./serverStore");
+const {
+  signallingPeerHandler,
+} = require("./socket handlers/signallingPeerHandler");
 
 const registerSocketServer = (server) => {
   const io = require("socket.io")(server, {
@@ -64,6 +70,16 @@ const registerSocketServer = (server) => {
 
     socket.on("room-close", (data) => {
       roomLeaveHandler(data, socket);
+    });
+
+    socket.on("conn-init", (data) => {
+      console.log("init krli");
+      peerConnectInitializationHandler(data, socket);
+    });
+
+    socket.on("conn-signal", (data) => {
+      console.log("signal bhej rhe hai join krne wale user ko");
+      signallingPeerHandler(data, socket);
     });
   });
 
