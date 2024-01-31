@@ -2,7 +2,8 @@ import { io } from "socket.io-client";
 import store from "../store/index";
 import { friendActions } from "../store/slices/friendsSlice";
 import { updateDirectChatHistoryIfActive } from "../components/shared/utils/chat";
-import { setRoomDetailsState, updateActiveRooms } from "./roomHandler";
+import { newRoomCreated, updateActiveRooms } from "./roomHandler";
+import * as webRTCHandler from "./webRTCHandler";
 
 let socket = null;
 export const connectWithSocketServer = (userDetails) => {
@@ -43,17 +44,38 @@ export const connectWithSocketServer = (userDetails) => {
   });
 
   socket.on("room-create", (data) => {
-    console.log("Active room details came from server");
-    setRoomDetailsState(data);
+    console.log("created room details came from server");
+    newRoomCreated(data);
   });
 
   socket.on("active-rooms", (data) => {
     updateActiveRooms(data);
   });
+
+  socket.on("conn-prepare", (data) => {
+    console.log("Please prepare for webRTC connection");
+    const { connUserSocketId } = data;
+    webRTCHandler.prepareNewPeerConnection(connUserSocketId, false); //false value if for whether the user is initiator or not
+    socket.emit("conn-init", { connUserSocketId });
+  });
+
+  socket.on("conn-init", (data) => {
+    //The initiator will handle this code.
+    const { connUserSocketId } = data;
+    webRTCHandler.prepareNewPeerConnection(connUserSocketId, true);
+  });
+
+  socket.on("conn-signal", (data) => {
+    webRTCHandler.handleSignalData(data);
+  });
+
+  socket.on("room-leave-participant", (data) => {
+    console.log(" A user left the room");
+    webRTCHandler.handleParticipantLeft(data);
+  });
 };
 
 export const sendDirectMessages = (data) => {
-  console.log(data);
   socket.emit("direct-message", data);
 };
 
@@ -71,4 +93,8 @@ export const joinRoom = (data) => {
 
 export const closeRoom = (data) => {
   socket.emit("room-close", data);
+};
+
+export const signalPeerData = (data) => {
+  socket.emit("conn-signal", data);
 };
