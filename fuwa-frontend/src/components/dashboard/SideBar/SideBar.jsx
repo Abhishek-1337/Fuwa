@@ -18,7 +18,7 @@ const SideBar = () => {
   return (
     <MainContainer>
       <MainPageButton />
-      <CreateRoomButton />
+      <CreateRoomButton isUserInRoom={roomState.isUserInRoom} />
       {roomState.activeRooms.map((room) => {
         return (
           <AddActiveRoomButton
