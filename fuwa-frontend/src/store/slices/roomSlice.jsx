@@ -37,6 +37,10 @@ const roomSlice = createSlice({
     setRemoteStream(state, action) {
       state.remoteStreams = action.payload;
     },
+    setScreenSharingStream(state, action) {
+      state.isScreenSharingActive = action.payload ? true : false;
+      state.screenSharingStream = action.payload || null;
+    },
   },
 });
 
