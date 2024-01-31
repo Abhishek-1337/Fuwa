@@ -8,6 +8,14 @@ exports.roomLeaveHandler = (data, socket) => {
   const activeRoom = serverStore.getActiveRoom(roomId);
   if (activeRoom) {
     serverStore.leaveActiveRoom({ socketId, roomId });
+
+    activeRoom.participants.forEach((participant) => {
+      if (participant.socketId !== socketId) {
+        socket.to(participant.socketId).emit("room-leave-participant", {
+          connUserSocketId: socketId,
+        });
+      }
+    });
     room.updateRooms();
   }
 };

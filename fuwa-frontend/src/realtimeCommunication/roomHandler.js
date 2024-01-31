@@ -11,11 +11,10 @@ export const createNewRoom = () => {
     socketConnection.createNewRoom();
   };
   const onlyAudio = store.getState().room.audioOnly;
-  console.log(onlyAudio);
   webRTCHandler.getLocalStreamPreview(onlyAudio, successCallbackFn);
 };
 
-export const setRoomDetailsState = (data) => {
+export const newRoomCreated = (data) => {
   const { roomDetails } = data;
   store.dispatch(roomActions.setRoomDetails(roomDetails));
 };
@@ -25,12 +24,20 @@ export const updateActiveRooms = (data) => {
   const friends = store.getState().friend.friends;
   const rooms = [];
 
+  const userId = store.getState().auth.userDetails?.id;
+
   activeRooms.forEach((room) => {
-    friends.forEach((f) => {
-      if (f.id === room.roomCreator.userId) {
-        rooms.push({ ...room, creator: f.name });
-      }
-    });
+    const isRoomCreatedByMe = room.roomCreator.userId === userId;
+
+    if (isRoomCreatedByMe) {
+      rooms.push({ ...room, creator: "Me" });
+    } else {
+      friends.forEach((f) => {
+        if (f.id === room.roomCreator.userId) {
+          rooms.push({ ...room, creator: f.name });
+        }
+      });
+    }
   });
   store.dispatch(roomActions.setActiveRooms(rooms));
 };
@@ -44,12 +51,13 @@ export const joinRoom = (roomId) => {
     socketConnection.joinRoom({ roomId });
   };
   const onlyAudio = store.getState().room.audioOnly;
-  console.log(onlyAudio);
   webRTCHandler.getLocalStreamPreview(onlyAudio, successCallbackFn);
 };
 
 export const closeRoom = () => {
-  const roomId = store.getState().room.roomDetails.roomId;
+  const roomDetails = store.getState().room.roomDetails;
+  console.log(roomDetails);
+  socketConnection.closeRoom({ roomId: roomDetails.roomId });
   store.dispatch(roomActions.setRoomDetails(null));
   store.dispatch(
     roomActions.setOpenRoom({ isUserInRoom: false, isUserRoomCreator: false })
@@ -59,6 +67,8 @@ export const closeRoom = () => {
   if (localStream) {
     localStream.getTracks().forEach((track) => track.stop());
   }
+
+  store.dispatch(roomActions.setRemoteStream([]));
+  webRTCHandler.closeAllConnection();
   store.dispatch(roomActions.setLocalStream(null));
-  socketConnection.closeRoom({ roomId });
 };
